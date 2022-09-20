@@ -18,13 +18,13 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib $(1)/usr/include
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdh_lua.so $(1)/usr/lib
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdh_lua.so $(1)/usr/lib/lua
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/dh_gen.h $(1)/usr/include/
 endef
 
 define Package/libDH-lua/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdh_lua.so $(1)/usr/lib
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdh_lua.so $(1)/usr/lib/lua
 endef
 
 $(eval $(call BuildPackage,libDH-lua))

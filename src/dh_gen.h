@@ -8,8 +8,6 @@
   #include "lualib.h"
   #include "lauxlib.h"
 #endif
-#include <openssl/bio.h>
-#include <openssl/dh.h>
 
 #ifdef __cplusplus
 extern "C"{

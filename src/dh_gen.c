@@ -1,5 +1,7 @@
 #include "dh_gen.h"
 
+#include <openssl/bio.h>
+#include <openssl/dh.h>
 #include <errno.h>
 
 #ifdef __cplusplus
@@ -10,7 +12,7 @@ static int gen_dh_params(lua_State *L) {
 
         int rc = 0;
 
-        double arg_bit_size = luaL_checknumber (L, 1);
+        int arg_bit_size = luaL_checkint (L, 1);
         char *file_name = luaL_checkstring(L, 2);
 
         BIO *bio_out = NULL;
@@ -24,7 +26,7 @@ static int gen_dh_params(lua_State *L) {
                 goto EXIT_FUN;  
         }
 
-        if (!DH_generate_parameters_ex(dh, (int)arg_bit_size, DH_GENERATOR_2, NULL)){
+        if (!DH_generate_parameters_ex(dh, arg_bit_size, DH_GENERATOR_2, NULL)){
 
                 rc = EAGAIN;
                 goto EXIT_FUN;
