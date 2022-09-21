@@ -1,19 +1,19 @@
-#include "dh_gen.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 
 #include <openssl/bio.h>
 #include <openssl/dh.h>
+#include <openssl/pem.h>
 #include <errno.h>
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 
 static int gen_dh_params(lua_State *L) {
 
         int rc = 0;
 
         int arg_bit_size = luaL_checkint (L, 1);
-        char *file_name = luaL_checkstring(L, 2);
+        const char *file_name = luaL_checkstring(L, 2);
 
         BIO *bio_out = NULL;
         DH *dh = NULL;
@@ -56,16 +56,15 @@ EXIT_FUN:
         return 1;
 }
 
-static const struct luaL_Reg dh_lib [] = {
-      {"generate dh parameters file", gen_dh_params},
+static const struct luaL_Reg dh_gen [] = {
+      {"gen_dh_file", gen_dh_params},
       {NULL, NULL} 
     };
 
-int luaopen_mylib (lua_State *L){
-    luaL_newlib(L, dh_lib);
+int luaopen_gen_dh_lua (lua_State *L){
+
+        luaL_register(L, "gen_dh_file", dh_gen);
+
     return 1;
 }
 
-#ifdef __cplusplus
-}
-#endif
